@@ -69,22 +69,24 @@ const CheckoutPopup = ({ show, handleClose, cartItems, totalPrice }) => {
       setIsSubmitting(false);
     }
   };
-  const convertBase64ToDataURL = (base64String, mimeType = "image/jpeg") => {
-    if (!base64String) return unplugged; // Return fallback image if no data
+  const convertBase64ToDataURL = (
+  base64String,
+  mimeType = "image/jpeg"
+) => {
+  const fallbackImage = "/fallback-image.jpg";
 
-    // If it's already a data URL, return as is
-    if (base64String.startsWith("data:")) {
-      return base64String;
-    }
+  if (!base64String) return fallbackImage;
 
-    // If it's already a URL, return as is
-    if (base64String.startsWith("http")) {
-      return base64String;
-    }
+  if (base64String.startsWith("data:")) {
+    return base64String;
+  }
 
-    // Convert base64 string to data URL
-    return `data:${mimeType};base64,${base64String}`;
-  };
+  if (base64String.startsWith("http")) {
+    return base64String;
+  }
+
+  return `data:${mimeType};base64,${base64String}`;
+};
   return (
     <>
       <Modal show={show} onHide={handleClose} centered>
